@@ -1,0 +1,82 @@
+import java.util.Scanner;
+
+public class DecisionBasedCalculator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String operation;
+        double num1, num2, result;
+        boolean keepRunning = true;
+
+        System.out.println("Welcome to the Java Calculator!");
+
+        while (keepRunning) {
+            System.out.print("Enter an operation (+, -, *, /, or exit): ");
+            operation = scanner.nextLine().toLowerCase();
+
+            if (operation.equals("exit")) {
+                keepRunning = false;
+                System.out.println("Thank you for using the Java Calculator! Goodbye!");
+                break;
+            }
+
+            if (!operation.equals("+") && !operation.equals("-") && 
+                !operation.equals("*") && !operation.equals("/")) {
+                System.out.println("Error: Invalid operation. Please enter +, -, *, /, or exit.");
+                continue;
+            }
+
+            try {
+                System.out.print("Enter the first number: ");
+                num1 = Double.parseDouble(scanner.nextLine());
+
+                System.out.print("Enter the second number: ");
+                num2 = Double.parseDouble(scanner.nextLine());
+
+                // Range check
+                if ((num1 < -1000 || num1 > 1000) || (num2 < -1000 || num2 > 1000)) {
+                    System.out.println("Error: Please enter numbers between -1000 and 1000.");
+                    continue;
+                }
+
+                // Perform calculation
+                switch (operation) {
+                    case "+":
+                        result = num1 + num2;
+                        System.out.println("The result of " + num1 + " + " + num2 + " = " + result);
+                        break;
+                    case "-":
+                        result = num1 - num2;
+                        System.out.println("The result of " + num1 + " - " + num2 + " = " + result);
+                        break;
+                    case "*":
+                        result = num1 * num2;
+                        System.out.println("The result of " + num1 + " * " + num2 + " = " + result);
+                        break;
+                    case "/":
+                        if (num2 == 0) {
+                            System.out.println("Error: Division by zero is not allowed.");
+                        } else {
+                            result = num1 / num2;
+                            System.out.println("The result of " + num1 + " / " + num2 + " = " + result);
+                        }
+                        break;
+                    default:
+                        System.out.println("Unexpected error.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter valid numeric values.");
+            }
+
+            System.out.print("Would you like to perform another operation (yes/no)? ");
+            String answer = scanner.nextLine().toLowerCase();
+            if (!answer.equals("yes")) {
+                keepRunning = false;
+                System.out.println("Thank you for using the Java Calculator! Goodbye!");
+            }
+        }
+
+        scanner.close();
+    }
+}
